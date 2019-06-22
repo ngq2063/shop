@@ -1,6 +1,7 @@
 package com.pyg.shop.controller;
 import java.util.List;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,6 +11,7 @@ import com.pyg.manager.service.GoodsService;
 
 import com.pyg.utils.PageResult;
 import com.pyg.utils.PygResult;
+import com.pyg.vo.Goods;
 /**
  * controller
  * @author Administrator
@@ -47,14 +49,13 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping("/add")
-	public PygResult add(@RequestBody TbGoods goods){
-		try {
-			goodsService.add(goods);
-			return new PygResult(true, "增加成功");
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new PygResult(false, "增加失败");
-		}
+	public PygResult add(@RequestBody Goods goods){
+		
+		String name = SecurityContextHolder.getContext().getAuthentication().getName();
+		goods.getGoods().setSellerId(name);
+		
+		return 	goodsService.add(goods);
+		
 	}
 	
 	/**

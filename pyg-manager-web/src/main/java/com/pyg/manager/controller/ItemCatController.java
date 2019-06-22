@@ -111,4 +111,14 @@ public class ItemCatController {
 		return itemCatService.findPage(itemCat, page, rows);		
 	}
 	
+	/**
+	 * 需求：通过父id查询总商品
+	 * 
+	 * */
+	
+	@RequestMapping("/findItemCatByParentId")
+	public List findItemCatByParentId(Long parentId){
+		return itemCatService.findItemCatByParentId(parentId);
+	}
+	
 }

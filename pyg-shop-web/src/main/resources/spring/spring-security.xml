@@ -34,7 +34,7 @@ http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubb
 	</headers>
 	<!-- 推出登录配置 -->
 	<!-- logout: spring security 安全框架自动生成推出地址:/logout -->
-	<logout logout-success-url="/login.html"/>
+	<logout logout-success-url="/shoplogin.html"/>
 </http>
 <!-- 引入dubbo服务 -->
 <dubbo:application name="pyg-shop-web" />

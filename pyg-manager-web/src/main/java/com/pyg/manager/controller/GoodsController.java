@@ -10,6 +10,7 @@ import com.pyg.manager.service.GoodsService;
 
 import com.pyg.utils.PageResult;
 import com.pyg.utils.PygResult;
+import com.pyg.vo.Goods;
 /**
  * controller
  * @author Administrator
@@ -47,14 +48,10 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping("/add")
-	public PygResult add(@RequestBody TbGoods goods){
-		try {
-			goodsService.add(goods);
-			return new PygResult(true, "增加成功");
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new PygResult(false, "增加失败");
-		}
+	public PygResult add(@RequestBody Goods goods){
+		
+		return 	goodsService.add(goods);
+	
 	}
 	
 	/**

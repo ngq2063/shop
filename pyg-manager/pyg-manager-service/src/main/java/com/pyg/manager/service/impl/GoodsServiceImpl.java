@@ -1,16 +1,24 @@
 package com.pyg.manager.service.impl;
 import java.util.List;
+
+import org.omg.CORBA.TRANSACTION_UNAVAILABLE;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.pyg.mapper.TbGoodsDescMapper;
 import com.pyg.mapper.TbGoodsMapper;
 import com.pyg.pojo.TbGoods;
+import com.pyg.pojo.TbGoodsDesc;
 import com.pyg.pojo.TbGoodsExample;
 import com.pyg.pojo.TbGoodsExample.Criteria;
 import com.pyg.manager.service.GoodsService;
 
 import com.pyg.utils.PageResult;
+import com.pyg.utils.PygResult;
+import com.pyg.vo.Goods;
 
 /**
  * 服务实现层
@@ -40,13 +48,33 @@ public class GoodsServiceImpl implements GoodsService {
 		Page<TbGoods> page=   (Page<TbGoods>) goodsMapper.selectByExample(null);
 		return new PageResult(page.getTotal(), page.getResult());
 	}
+	
+	@Autowired
+	private TbGoodsDescMapper goodsDescMapper;
 
 	/**
 	 * 增加
 	 */
 	@Override
-	public void add(TbGoods goods) {
-		goodsMapper.insert(goods);		
+	public PygResult add(Goods goods) {
+		
+		try{
+			//先保存货品表数据
+			TbGoods tbGoods = goods.getGoods();
+			//保存货品，返回主键
+			goodsMapper.insertSelective(tbGoods);
+			//再保存货品描述数据
+			TbGoodsDesc tbGoodsDesc = goods.getGoodsDesc();
+			tbGoodsDesc.setGoodsId(tbGoods.getId());
+			goodsDescMapper.insertSelective(tbGoodsDesc);
+			//最后保存商品表数据
+			
+			
+			return new PygResult(true, "保存成功");
+		}catch (Exception e) {
+             e.printStackTrace();
+             return new PygResult(false, "保存失败");
+		}
 	}
 
 	

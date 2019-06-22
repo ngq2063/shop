@@ -58,4 +58,11 @@ public interface ItemCatService {
 	 */
 	public PageResult findPage(TbItemCat itemCat, int pageNum,int pageSize);
 	
+	
+	/**
+	 * 需求：通过父id查询总商品
+	 * 
+	 * */
+	public List<TbItemCat> findItemCatByParentId(Long parentId);
+	
 }

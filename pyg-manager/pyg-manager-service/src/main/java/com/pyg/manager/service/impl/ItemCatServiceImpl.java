@@ -96,5 +96,17 @@ public class ItemCatServiceImpl implements ItemCatService {
 		Page<TbItemCat> page= (Page<TbItemCat>)itemCatMapper.selectByExample(example);		
 		return new PageResult(page.getTotal(), page.getResult());
 	}
+		/**
+		 * 需求：通过父id查询总商品
+		 * 
+		 * */
+		public List<TbItemCat> findItemCatByParentId(Long parentId) {
+			//通过example进行查询
+			TbItemCatExample example=new TbItemCatExample();
+			Criteria criteria = example.createCriteria();
+			criteria.andParentIdEqualTo(parentId);
+			List<TbItemCat> list = itemCatMapper.selectByExample(example);
+			return list;
+		}
 	
 }
