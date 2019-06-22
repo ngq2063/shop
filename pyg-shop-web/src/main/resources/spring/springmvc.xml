@@ -27,8 +27,7 @@
 	<mvc:default-servlet-handler/>
 
 	<!-- 引用dubbo 服务 -->
-	<dubbo:application name="pyg-shop-web" />
-	<dubbo:registry address="zookeeper://47.100.121.61:2181"/>
+	
 	<dubbo:annotation package="com.pyg.shop.controller" />  	
 
 </beans>

@@ -4,6 +4,8 @@ import java.util.List;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.alibaba.druid.sql.dialect.oracle.ast.clause.ModelClause.ReturnRowsClause;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.pyg.pojo.TbSeller;
 import com.pyg.manager.service.SellerService;
@@ -109,6 +111,14 @@ public class SellerController {
 	@RequestMapping("/search")
 	public PageResult search(@RequestBody TbSeller seller, int page, int rows  ){
 		return sellerService.findPage(seller, page, rows);		
+	}
+	
+	/**修改商家状态*/
+	
+	@RequestMapping("/updateStatus")
+	public PygResult updateStatus(String id,String status){
+		return  sellerService.updateStatus(id, status);
+		
 	}
 	
 }

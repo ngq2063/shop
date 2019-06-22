@@ -8,6 +8,7 @@ import com.pyg.utils.PageResult;
  * @author Administrator
  *
  */
+import com.pyg.utils.PygResult;
 public interface SellerService {
 
 	/**
@@ -57,5 +58,12 @@ public interface SellerService {
 	 * @return
 	 */
 	public PageResult findPage(TbSeller seller, int pageNum,int pageSize);
+	
+	
+	/**
+	 * 修改商家的状态值
+	 * */
+	
+	public PygResult updateStatus(String id,String status);
 	
 }

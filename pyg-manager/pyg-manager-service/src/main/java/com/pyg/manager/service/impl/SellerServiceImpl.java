@@ -1,6 +1,8 @@
 package com.pyg.manager.service.impl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.RequestToViewNameTranslator;
+
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -11,6 +13,7 @@ import com.pyg.pojo.TbSellerExample.Criteria;
 import com.pyg.manager.service.SellerService;
 
 import com.pyg.utils.PageResult;
+import com.pyg.utils.PygResult;
 
 /**
  * 服务实现层
@@ -46,7 +49,7 @@ public class SellerServiceImpl implements SellerService {
 	 */
 	@Override
 	public void add(TbSeller seller) {
-		sellerMapper.insert(seller);		
+		sellerMapper.insertSelective(seller);	
 	}
 
 	
@@ -159,5 +162,23 @@ public class SellerServiceImpl implements SellerService {
 		Page<TbSeller> page= (Page<TbSeller>)sellerMapper.selectByExample(example);		
 		return new PageResult(page.getTotal(), page.getResult());
 	}
+
+		@Override
+		public PygResult updateStatus(String id, String status) {
+			try{
+				TbSeller seller= sellerMapper.selectByPrimaryKey(id);
+				seller.setStatus(status);
+				sellerMapper.updateByPrimaryKeySelective(seller);
+				return new PygResult(true, "修改成功");
+			}catch (Exception e) {
+				e.printStackTrace();
+				return new PygResult(false, "修改失败");
+			}
+		}
+		
+		/**
+		 * 修改商家的状态*/
+
+	
 	
 }
