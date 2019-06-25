@@ -1,5 +1,5 @@
  //控制层 
-app.controller('goodsController' ,function($scope,$controller,goodsService,itemCatService){	
+app.controller('goodsController' ,function($scope,$controller,goodsService,itemCatService,uploadService,typeTemplateService){	
 	
 	$controller('baseController',{$scope:$scope});//继承
 	
@@ -132,8 +132,57 @@ app.controller('goodsController' ,function($scope,$controller,goodsService,itemC
 		//newValue就是分类id
 		//调用服务方法
 		itemCatService.findOne(newValue).success(function(data){
-			$scope.entity.typeId = data.typeId;
+			$scope.entity.goods.typeTemplateId = data.typeId;
 		});
 	});
+	
+
+	//监控模板id值得变化
+	$scope.$watch('entity.goods.typeTemplateId',function(newValue,oldValue){
+		typeTemplateService.findOne(newValue).success(function(data){
+			//绑定模板对象
+			$scope.typeTemplate=data;
+			//获取模板品牌数据
+			$scope.typeTemplate.brandIds=JSON.parse($scope.typeTemplate.brandIds);
+			// 获取模版中扩展属性
+			$scope.entity.goodsDesc.customAttributeItems = JSON.parse($scope.typeTemplate.customAttributeItems);
+		});
+		
+		// 查询模版中存储关键规格属性对应规格选项
+		// 调用模版服务方法
+		typeTemplateService.findSpecOptionListByTypeId(newValue).success(
+				function(data) {
+					$scope.specList = data;
+				});
+	})
+	
+	//文件上传
+   $scope.uploadFile=function(){
+		uploadService.uploadFile().success(function(data){
+			if(data.success){
+				$scope.imageEntity.url=data.message;
+			}
+			else{
+				alert("上传失败");
+			}
+		})
+		
+	}
+   //定义初始化对象
+   $scope.entity={goods:{},goodsDesc:{itemImages : [],
+		specificationItems : []}};
+   
+   //保存图片操作
+   $scope.add_image_entity=function(){
+	   //把图片对象数据添加到商品描述中
+	   $scope.entity.goodsDesc.itemImages.push($scope.imageEntity);
+   }
+   
+   //删除图片对象
+   $scope.remove=function(index){
+	   $scope.entity.goodsDesc.itemImages.splice(index,1);
+   }
+   
+   
     
 });	

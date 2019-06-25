@@ -18,7 +18,7 @@ import com.pyg.utils.PygResult;
 public class BrandController {
 	
 	//注入远程服务对象
-	@Reference(timeout=10000000,retries=2)
+	@Reference
 	private BrandService brandService;
 	
 	/**

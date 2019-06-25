@@ -8,6 +8,8 @@ http://www.springframework.org/schema/security
 http://www.springframework.org/schema/security/spring-security.xsd
 http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
+
+
 <!-- 在权限认证之前访问资源需要放行 -->
 <http pattern="/shoplogin.html" security="none"></http>
 <http pattern="/error.html" security="none"></http>
@@ -38,7 +40,7 @@ http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubb
 </http>
 <!-- 引入dubbo服务 -->
 <dubbo:application name="pyg-shop-web" />
-<dubbo:registry address="zookeeper://47.100.121.61:2181"/>
+<dubbo:registry address="zookeeper://192.168.25.129:2181"/>
 <!-- 通过xml引入sellerservice服务 -->
 <dubbo:reference id="sellerService" interface="com.pyg.manager.service.SellerService" ></dubbo:reference>
 

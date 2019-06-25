@@ -1,5 +1,7 @@
 package com.pyg.manager.service;
 import java.util.List;
+import java.util.Map;
+
 import com.pyg.pojo.TbTypeTemplate;
 
 import com.pyg.utils.PageResult;
@@ -57,5 +59,14 @@ public interface TypeTemplateService {
 	 * @return
 	 */
 	public PageResult findPage(TbTypeTemplate typeTemplate, int pageNum,int pageSize);
+
+	
+
+	/**
+	 * 需求：通过模板的id值，查询规格属性对应的规格选项
+	 * 参数：模板id Long id
+	 * 返回值为List<map>
+	 * */
+	public List<Map> findSpecOptionListByTypeId(Long typeId);
 	
 }
