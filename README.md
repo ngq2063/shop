@@ -1,1 +1,1 @@
-分布式电商项目，使用的技术为ssm+spring Security+boorstrap+jQuery+dubbo+zookeeper+angularjs，会进行持续更新
+分布式电商项目，使用的技术为ssm+spring Security+boorstrap+jQuery+dubbo+zookeeper+angularjs
